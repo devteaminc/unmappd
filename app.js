@@ -17,6 +17,10 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
 });
 
+app.get(/^(.+)$/, function(req, res) { 
+  res.sendfile(__dirname + req.params[0]); 
+});
+
 // parse creds from file
 var credentials = JSON.parse(data);
 
