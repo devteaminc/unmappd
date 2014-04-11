@@ -1,0 +1,15 @@
+{
+  "name": "beertime",
+  "version": "0.0.1",
+  "private": true,
+  "description": "surely its time for a drink",
+  "main": "app.js",
+  "dependencies": {
+    "express": "~4.0.0",
+    "socket.io": "~0.9.16",
+    "twit": "~1.1.13"
+  },
+  "devDependencies": {},
+  "author": "robjmills",
+  "license": "MIT"
+}

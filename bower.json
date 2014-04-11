@@ -1,0 +1,25 @@
+{
+  "name": "nodebeer",
+  "version": "0.0.1",
+  "authors": [
+    "Rob Mills <robjmills@gmail.com>"
+  ],
+  "description": "its a beer thing",
+  "main": "index.html",
+  "keywords": [
+    "beer"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "jquery": "~2.1.0"
+  }
+}
