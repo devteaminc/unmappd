@@ -32,7 +32,7 @@ var T = new Twit({
   access_token_secret: credentials.access_token_secret
 })
 
-// array of terms to track
+// array of terms to trackList
 var trackList = ['untp it'];
 
 // open socket connection

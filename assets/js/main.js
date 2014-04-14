@@ -1,11 +1,21 @@
-var map;
+var mapAll;
+var mapDet;
+
 function initialize() {
-    var mapOptions = {
+    var mapAllOptions = {
+        zoom: 1,
+        center: new google.maps.LatLng(20, 0),
+        mapTypeId: 'terrain'
+    };
+
+    var mapDetOptions = {
         zoom: 2,
         center: new google.maps.LatLng(0, 0),
         mapTypeId: 'terrain'
     };
-   map = new google.maps.Map(document.getElementById('map'), mapOptions);
+   
+   mapAll = new google.maps.Map(document.getElementById('mapAll'), mapAllOptions);
+   mapDet = new google.maps.Map(document.getElementById('mapDet'), mapDetOptions);
 }
 initialize();
 
@@ -25,13 +35,20 @@ socket.on('stream', function(tweet){
             var lat = p[0];
             var lng = p[1];
             var latlng = new google.maps.LatLng(lat, lng);
-            var marker = new google.maps.Marker({
+            var marker1 = new google.maps.Marker({
                 position: latlng,
-                map: map
+                map: mapAll,
+                title: tweet.text
+            });
+
+            var marker2 = new google.maps.Marker({
+                position: latlng,
+                map: mapDet,
+                title: tweet.text
             });
             var center = new google.maps.LatLng(lat, lng);
-            map.panTo(center);
-            map.setZoom(5);
+            mapDet.panTo(center);
+            mapDet.setZoom(5);
         }
     }
 });
