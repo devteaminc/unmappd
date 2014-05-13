@@ -10,7 +10,7 @@ var fs = require('fs');
 var data = fs.readFileSync('./private.json');
 
 // listen on a l33t port
-server.listen(1337);
+server.listen(process.env.PORT || 1337)
 
 // routing
 app.get('/', function (req, res) {
