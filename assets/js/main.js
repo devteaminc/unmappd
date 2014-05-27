@@ -5,13 +5,15 @@ function initialize() {
     var mapAllOptions = {
         zoom: 1,
         center: new google.maps.LatLng(20, 0),
-        mapTypeId: 'terrain'
+        mapTypeId: 'terrain',
+        disableDefaultUI: true
     };
 
     var mapDetOptions = {
         zoom: 2,
         center: new google.maps.LatLng(0, 0),
-        mapTypeId: 'terrain'
+        mapTypeId: 'terrain',
+        disableDefaultUI: true
     };
    
    mapAll = new google.maps.Map(document.getElementById('mapAll'), mapAllOptions);
@@ -20,17 +22,14 @@ function initialize() {
 initialize();
 
 // socket code
-// 
 var published = [];
 var socket = io.connect('http://localhost:1337');
 socket.on('stream', function(tweet){
     var twid = tweet.id;
     if(published.indexOf( twid ) == -1){
         published.push(twid);
-        $("#beertweets dd").removeClass("lead").addClass("text-muted");
-        $("#beertweets dd img").hide();
-        $('#beertweets').prepend('<dd class="lead"><img src="'+tweet.user.profile_image_url+'" class="img-rounded" /> '+tweet.text+'</dd>').fadeIn();
-        if(tweet.geo != null){
+        $('#beertweets').prepend('<li class="left clearfix"><span class="beertweets-img pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+'</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span><span data-livestamp="'+tweet.created_at+'"></span></small></div><p>'+tweetFormatter(tweet.text)+'</p></div></li>').fadeIn();
+        if(tweet.geo !== null){
             var p = tweet.geo.coordinates;
             var lat = p[0];
             var lng = p[1];

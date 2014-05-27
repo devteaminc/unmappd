@@ -20,6 +20,8 @@
   ],
   "dependencies": {
     "bootstrap": "~3.1.1",
-    "jquery": "~2.1.0"
+    "jquery": "~2.1.0",
+    "tweet-formatter": "*",
+    "livestamp": "git://github.com/mattbradley/livestampjs.git#master"
   }
 }
