@@ -5,12 +5,10 @@ var express = require('express'),
   Twit = require('twit'),
   io = require('socket.io').listen(server);
 
-// read credentials from private.json
-var fs = require('fs');
-var data = fs.readFileSync('./private.json');
+// listen on port 5000
+server.listen(process.env.PORT);
 
-// listen on a l33t port
-server.listen(process.env.PORT || 1337);
+console.log(process.env);
 
 // routing
 app.get('/', function (req, res) {
@@ -21,15 +19,12 @@ app.get(/^(.+)$/, function(req, res) {
   res.sendfile(__dirname + req.params[0]); 
 });
 
-// parse creds from file
-var credentials = JSON.parse(data);
-
 // init Twit
 var T = new Twit({
-  consumer_key: credentials.consumer_key,
-  consumer_secret: credentials.consumer_secret,
-  access_token: credentials.access_token,
-  access_token_secret: credentials.access_token_secret
+  consumer_key: process.env.consumer_key,
+  consumer_secret: process.env.consumer_secret,
+  access_token: process.env.access_token,
+  access_token_secret: process.env.access_token_secret
 });
 
 // array of terms to trackList

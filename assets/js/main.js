@@ -23,12 +23,12 @@ initialize();
 
 // socket code
 var published = [];
-var socket = io.connect('http://localhost:1337');
+var socket = io.connect('http://localhost:5000');
 socket.on('stream', function(tweet){
     var twid = tweet.id;
     if(published.indexOf( twid ) == -1){
         published.push(twid);
-        $('#beertweets').prepend('<li class="left clearfix"><span class="beertweets-img pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+'</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span><span data-livestamp="'+tweet.created_at+'"></span></small></div><p>'+tweetFormatter(tweet.text)+'</p></div></li>').fadeIn();
+        $('<li class="left clearfix" style="display: none;"><span class="beertweets-img pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+'</strong> <small class="pull-right text-muted"><span class="glyphicon glyphicon-time"></span><span data-livestamp="'+tweet.created_at+'"></span></small></div><p>'+tweetFormatter(tweet.text)+'</p></div></li>').hide().prependTo('#beertweets').show('fast');
         if(tweet.geo !== null){
             var p = tweet.geo.coordinates;
             var lat = p[0];
