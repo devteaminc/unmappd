@@ -6,7 +6,7 @@ var express = require('express'),
   io = require('socket.io').listen(server);
 
 // listen on port 5000
-server.listen(process.env.PORT);
+server.listen(process.env.PORT || 5000);
 
 // routing
 app.get('/', function (req, res) {
@@ -29,9 +29,9 @@ var T = new Twit({
 var trackList = ['untp it'];
 
 // open socket connection
-io.sockets.on('connection', function (socket){
+io.on('connection', function (socket){
   var stream = T.stream('statuses/filter', { track: trackList });
   stream.on('tweet', function (tweet) {
-    io.sockets.emit('stream',tweet);
+    io.emit('stream',tweet);
   });
 });

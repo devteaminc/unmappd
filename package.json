@@ -1,12 +1,12 @@
 {
-  "name": "beertime",
-  "version": "0.0.1",
+  "name": "beersignal",
+  "version": "0.0.2",
   "private": true,
   "description": "surely its time for a drink",
   "main": "app.js",
   "dependencies": {
     "express": "~4.0.0",
-    "socket.io": "~0.9.16",
+    "socket.io": "~1.0.1",
     "twit": "~1.1.13",
     "bower": "1.3.x"
   },
