@@ -11,5 +11,11 @@
   },
   "devDependencies": {},
   "author": "robjmills",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "postinstall": "bower install"
+  }
 }

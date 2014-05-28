@@ -8,8 +8,6 @@ var express = require('express'),
 // listen on port 5000
 server.listen(process.env.PORT);
 
-console.log(process.env);
-
 // routing
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/index.html');
