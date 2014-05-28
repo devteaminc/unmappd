@@ -23,7 +23,7 @@ initialize();
 
 // socket code
 var published = [];
-var socket = io.connect('http://localhost:5000');
+var socket = io.connect('http://'+location.hostname+':5000');
 socket.on('stream', function(tweet){
     var twid = tweet.id;
     if(published.indexOf( twid ) == -1){
