@@ -1,6 +1,6 @@
 {
   "name": "beersignal",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "description": "surely its time for a drink",
   "main": "app.js",
