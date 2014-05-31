@@ -23,11 +23,11 @@ app.get(/^(.+)$/, function(req, res) {
 // array of terms to trackList
 var trackList = ['untp it'];
 
+// open stream to Twitter
+var stream = T.stream('statuses/filter', { track: trackList });
+
 // open socket connection
 io.on('connection', function (socket){
-
-  // open stream to Twitter
-  var stream = T.stream('statuses/filter', { track: trackList });
 
   // Emitted each time a status (tweet) comes into the stream
   stream.on('tweet', function (tweet) {
