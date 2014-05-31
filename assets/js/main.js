@@ -4,6 +4,8 @@ var mapDet;
 function initialize() {
     var mapAllOptions = {
         zoom: 1,
+        draggable: false,
+        scrollwheel: false,
         center: new google.maps.LatLng(20, 0),
         disableDefaultUI: true,
         styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
@@ -11,6 +13,8 @@ function initialize() {
 
     var mapDetOptions = {
         zoom: 2,
+        draggable: false,
+        scrollwheel: false,
         center: new google.maps.LatLng(0, 0),
         disableDefaultUI: true,
         styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
