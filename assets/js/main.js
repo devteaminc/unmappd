@@ -30,7 +30,6 @@ var published = [];
 var socket = io.connect('http://'+location.hostname);
 socket.on('stream', function(tweet){
     var twid = tweet.id;
-    console.log(tweet);
     if(published.indexOf( twid ) == -1){
         published.push(twid);
         var place = '';
