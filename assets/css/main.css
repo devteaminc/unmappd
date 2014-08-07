@@ -52,7 +52,7 @@ body {
     border-bottom: 1px;
 }
 
-#beertweets li .tweettext strong
+#beertweets li .tweettext strong, #beertweets li .placetext
 {
   font-weight: normal;
   color: #000;

@@ -1,6 +1,9 @@
 var mapAll;
 var mapDet;
 
+/*
+ * Horrible and hacky - needs updating
+ */
 function textReplacements(tweettext){
 
     // Make the name of the beer bold
@@ -32,6 +35,9 @@ function textReplacements(tweettext){
     return tweettext;
 }
 
+/*
+ * Initialise the 2 maps
+ */
 function initialize() {
     var mapAllOptions = {
         zoom: 1,
@@ -58,37 +64,51 @@ initialize();
 
 // socket code
 var published = [];
+
+// init place
+var place = '';
 var socket = io.connect('http://'+location.hostname);
 socket.on('stream', function(tweet){
     var twid = tweet.id;
     if(published.indexOf( twid ) == -1){
 
+        // store the ID in the published array to make sure we don't double-publish
+        published.push(twid);
+
         // format twitter specific elements in string - e.g. usernames, links and hashtags
         var tweettext = tweetFormatter(tweet.text);
 
-        published.push(twid);
-        var place = '';
+        // reset place
+        place = '';
+
+        // add marker to the map if the tweet contains geo
         if(tweet.geo !== null){
             var p = tweet.geo.coordinates;
             var lat = p[0];
             var lng = p[1];
             var latlng = new google.maps.LatLng(lat, lng);
+
+            // add to 'All' map
             var marker1 = new google.maps.Marker({
                 position: latlng,
                 map: mapAll,
                 title: tweet.text
             });
 
+            // add to 'Detail' map
             var marker2 = new google.maps.Marker({
                 position: latlng,
                 map: mapDet,
                 title: tweet.text
             });
+
+            // set a new center of the map to latest marker and then pan to there
             var center = new google.maps.LatLng(lat, lng);
             mapDet.panTo(center);
             mapDet.setZoom(5);
 
-            place = '<small class="text-muted"> '+tweet.place.full_name+' <span class="glyphicon glyphicon-pushpin"></span></small>';
+            // create a string for place details
+            place = '<small class="text-muted placetext"> in '+tweet.place.full_name+'</small>';
         }
 
         tweettext = textReplacements(tweettext);
@@ -97,6 +117,6 @@ socket.on('stream', function(tweet){
             .hide()
             .prependTo('#beertweets')
             .show('fast'); 
-        $("#beertweets .tweettext a[href^='http://']").attr("target","_blank");
+        $("#beertweets .tweettext a[href^='http://'],a[href^='https://']").attr("target","_blank");
     }
 });
