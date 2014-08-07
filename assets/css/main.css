@@ -52,6 +52,12 @@ body {
     border-bottom: 1px;
 }
 
+#beertweets li .tweettext strong
+{
+  font-weight: normal;
+  color: #000;
+}
+
 #beertweets li.left .beertweets-body
 {
     margin-left: 60px;

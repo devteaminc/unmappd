@@ -4,6 +4,15 @@ var mapDet;
 function textReplacements(tweettext){
 
     // Make the name of the beer bold
+    var regExpa = /Drinking an(.*)by/;
+    var matcha = regExpa.exec(tweettext);
+
+    if(matcha !== null){
+        var replaca = '<strong> '+matcha[1]+' </strong>';
+        tweettext = tweettext.replace(matcha[1],replaca);
+    }
+
+    // Make the name of the beer bold
     var regExp = /Drinking a(.*)by/;
     var matches = regExp.exec(tweettext);
 
