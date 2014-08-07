@@ -1,10 +1,10 @@
 {
-  "name": "nodebeer",
+  "name": "unmappd",
   "version": "0.0.1",
   "authors": [
-    "Rob Mills <robjmills@gmail.com>"
+    "Rob Mills <rob@devteaminc.co>"
   ],
-  "description": "its a beer thing",
+  "description": "untappd checkins from Twitter stream",
   "main": "index.html",
   "keywords": [
     "beer"

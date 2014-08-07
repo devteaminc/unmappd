@@ -1,6 +1,28 @@
 var mapAll;
 var mapDet;
 
+function textReplacements(tweettext){
+
+    // Make the name of the beer bold
+    var regExp = /Drinking a(.*)by/;
+    var matches = regExp.exec(tweettext);
+
+    if(matches !== null){
+        var replacement = '<strong> '+matches[1]+' </strong>';
+        tweettext = tweettext.replace(matches[1],replacement);
+    }
+
+    // Make the name of the badge bold
+    var regExps = /I just earned the(.*)badge/;
+    var match = regExps.exec(tweettext);
+
+    if(match !== null){
+        var replacer = '<strong> '+match[1]+' </strong>';
+        tweettext = tweettext.replace(match[1],replacer);
+    }
+    return tweettext;
+}
+
 function initialize() {
     var mapAllOptions = {
         zoom: 1,
@@ -31,6 +53,10 @@ var socket = io.connect('http://'+location.hostname);
 socket.on('stream', function(tweet){
     var twid = tweet.id;
     if(published.indexOf( twid ) == -1){
+
+        // format twitter specific elements in string - e.g. usernames, links and hashtags
+        var tweettext = tweetFormatter(tweet.text);
+
         published.push(twid);
         var place = '';
         if(tweet.geo !== null){
@@ -55,6 +81,13 @@ socket.on('stream', function(tweet){
 
             place = '<small class="text-muted"> '+tweet.place.full_name+' <span class="glyphicon glyphicon-pushpin"></span></small>';
         }
-        $('<li class="left clearfix" style="display: none;"><span class="pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle profile"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+''+place+'</strong><small class="pull-right text-muted"><span data-livestamp="'+tweet.created_at+'"></span> <span class="glyphicon glyphicon-time"></span></small></div><p>'+tweetFormatter(tweet.text)+'</p></div></li>').hide().prependTo('#beertweets').show('fast'); 
+
+        tweettext = textReplacements(tweettext);
+
+        $('<li class="left clearfix" style="display: none;"><span class="pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle profile"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+''+place+'</strong><small class="pull-right text-muted"><span data-livestamp="'+tweet.created_at+'"></span> <span class="glyphicon glyphicon-time"></span></small></div><p class="tweettext">'+tweettext+'</p></div></li>')
+            .hide()
+            .prependTo('#beertweets')
+            .show('fast'); 
+        $("#beertweets .tweettext a[href^='http://']").attr("target","_blank");
     }
 });

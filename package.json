@@ -1,8 +1,8 @@
 {
-  "name": "beersignal",
+  "name": "unmappd",
   "version": "0.0.3",
   "private": true,
-  "description": "surely its time for a drink",
+  "description": "untappd checkins from Twitter stream",
   "main": "app.js",
   "dependencies": {
     "express": "~4.0.0",

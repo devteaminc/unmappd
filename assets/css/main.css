@@ -4,11 +4,14 @@ html {
   position: relative;
   min-height: 100%;
 }
+
 body {
   margin-top: 60px;
   margin-bottom: 20px;
   background-color: #f5f2e8;
+  font-family: Helvetica Neue, Helvetica, sans-serif;
 }
+
 #footer {
   position: absolute;
   bottom: 0;
@@ -16,14 +19,19 @@ body {
   height: 20px;
   background-color: #000;
   font-family: "Montserrat", Helvetica Neue, Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+.col-md-6{
+  padding: 0 5px 0 5px;
 }
 
 .navbar-brand{
   font-family: "Montserrat", Helvetica Neue, Helvetica, sans-serif;
-  font-weight: bolder;
+  font-weight: bolder; 
 }
 
-.map {height: 360px; padding:10px;border:1px solid #999; }
+.map {height: 360px; border:1px solid #999; }
 
 #beertweets
 {
