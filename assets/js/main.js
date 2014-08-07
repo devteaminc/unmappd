@@ -55,6 +55,6 @@ socket.on('stream', function(tweet){
 
             place = '<small class="text-muted"> '+tweet.place.full_name+' <span class="glyphicon glyphicon-pushpin"></span></small>';
         }
-        $('<li class="left clearfix" style="display: none;"><span class="beertweets-img pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+''+place+'</strong><small class="pull-right text-muted"><span data-livestamp="'+tweet.created_at+'"></span> <span class="glyphicon glyphicon-time"></span></small></div><p>'+tweetFormatter(tweet.text)+'</p></div></li>').hide().prependTo('#beertweets').show('fast'); 
+        $('<li class="left clearfix" style="display: none;"><span class="pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle profile"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+''+place+'</strong><small class="pull-right text-muted"><span data-livestamp="'+tweet.created_at+'"></span> <span class="glyphicon glyphicon-time"></span></small></div><p>'+tweetFormatter(tweet.text)+'</p></div></li>').hide().prependTo('#beertweets').show('fast'); 
     }
 });
