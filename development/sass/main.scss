@@ -1,5 +1,7 @@
-/* Sticky footer styles
--------------------------------------------------- */
+// import variables file
+@import 'variables';
+
+// stick footer styling
 html {
   position: relative;
   min-height: 100%;
@@ -9,7 +11,7 @@ body {
   margin-top: 60px;
   margin-bottom: 20px;
   background-color: #f5f2e8;
-  font-family: Helvetica Neue, Helvetica, sans-serif;
+  font-family: $body-font-stack;
 }
 
 #footer {
@@ -18,64 +20,60 @@ body {
   width: 100%;
   height: 20px;
   background-color: #000;
-  font-family: "Montserrat", Helvetica Neue, Helvetica, sans-serif;
+  font-family: $font-stack;
   font-size: 12px;
 }
+// end footer styling
 
 .col-md-6{
   padding: 0 5px 0 5px;
 }
 
-.navbar-brand{
-  font-family: "Montserrat", Helvetica Neue, Helvetica, sans-serif;
+.navbar-brand {
+  font-family: $font-stack;
   font-weight: bolder; 
 }
 
-.map {height: 360px; border:1px solid #999; }
+.map {
+  height: 360px; 
+  border:1px solid $border-color; 
+}
 
-#beertweets
-{
+#beertweets {
     list-style: none;
     margin: 5px 0 0 0;
     padding: 0;
 }
 
-.profile
-{
-  border:1px solid #999;
+.profile {
+  border:1px solid $border-color;
 }
 
-#beertweets li
-{
+#beertweets li {
     margin: 10px;
     padding-bottom: 5px;
     border-bottom: 1px;
 }
 
-#beertweets li .tweettext strong, #beertweets li .placetext
-{
+#beertweets li .tweettext strong, #beertweets li .placetext {
   font-weight: normal;
   color: #000;
 }
 
-#beertweets li.left .beertweets-body
-{
+#beertweets li.left .beertweets-body {
     margin-left: 60px;
 }
 
-#beertweets li.right .beertweets-body
-{
+#beertweets li.right .beertweets-body {
     margin-right: 60px;
 }
 
 
-#beertweets li .beertweets-body p
-{
+#beertweets li .beertweets-body p {
     margin: 0;
     color: #777777;
 }
 
-#beertweets .glyphicon
-{
+#beertweets .glyphicon {
     margin-right: 5px;
 }

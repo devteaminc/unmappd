@@ -1,5 +1,6 @@
 node_modules
-bower_components
+development/vendor
+development/css
 npm-debug.log
 .env
 .localenv

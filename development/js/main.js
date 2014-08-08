@@ -13,15 +13,16 @@ function textReplacements(tweettext){
     if(matcha !== null){
         var replaca = '<strong> '+matcha[1]+' </strong>';
         tweettext = tweettext.replace(matcha[1],replaca);
-    }
+    }else{
 
-    // Make the name of the beer bold
-    var regExp = /Drinking a(.*)by/;
-    var matches = regExp.exec(tweettext);
+        // Make the name of the beer bold
+        var regExp = /Drinking a(.*)by/;
+        var matches = regExp.exec(tweettext);
 
-    if(matches !== null){
-        var replacement = '<strong> '+matches[1]+' </strong>';
-        tweettext = tweettext.replace(matches[1],replacement);
+        if(matches !== null){
+            var replacement = '<strong> '+matches[1]+' </strong>';
+            tweettext = tweettext.replace(matches[1],replacement);
+        }
     }
 
     // Make the name of the badge bold
