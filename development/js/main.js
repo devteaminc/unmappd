@@ -114,10 +114,10 @@ socket.on('stream', function(tweet){
 
         tweettext = textReplacements(tweettext);
 
-        $('<li class="left clearfix" style="display: none;"><span class="pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle profile"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+''+place+'</strong><small class="pull-right text-muted"><span data-livestamp="'+tweet.created_at+'"></span> <span class="glyphicon glyphicon-time"></span></small></div><p class="tweettext">'+tweettext+'</p></div></li>')
-            .hide()
+        var newel = $('<li class="left clearfix" style="display: none;"><span class="pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle profile"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+''+place+'</strong><small class="pull-right text-muted"><span data-livestamp="'+tweet.created_at+'"></span> <span class="glyphicon glyphicon-time"></span></small></div><p class="tweettext">'+tweettext+'</p></div></li>');
+        $(newel).hide()
             .prependTo('#beertweets')
             .show('fast'); 
-        $("#beertweets .tweettext a[href^='http://'],a[href^='https://']").attr("target","_blank");
+        $(newel).find('a').attr("target","_blank");
     }
 });
