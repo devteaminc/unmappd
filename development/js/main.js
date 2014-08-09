@@ -1,5 +1,6 @@
 var mapAll;
 var mapDet;
+var maxtweets = 100;
 
 /*
  * Horrible and hacky - needs updating
@@ -63,12 +64,14 @@ function initialize() {
 }
 initialize();
 
-// socket code
+// store IDs of published tweets to prevent tweet duplication
 var published = [];
 
 // init place
 var place = '';
 var socket = io.connect('http://'+location.hostname);
+
+// respond to socket stream event
 socket.on('stream', function(tweet){
     var twid = tweet.id;
     if(published.indexOf( twid ) == -1){
@@ -109,15 +112,42 @@ socket.on('stream', function(tweet){
             mapDet.setZoom(5);
 
             // create a string for place details
-            place = '<small class="text-muted placetext"> in '+tweet.place.full_name+'</small>';
+            place = tweet.place.full_name;
         }
 
+        // highlight beer names and badges
         tweettext = textReplacements(tweettext);
 
-        var newel = $('<li class="left clearfix" style="display: none;"><span class="pull-left"><img src="'+tweet.user.profile_image_url+'" alt="User Avatar" class="img-circle profile"></span><div class="beertweets-body clearfix"><div class="header"><strong class="primary-font">'+tweet.user.name+''+place+'</strong><small class="pull-right text-muted"><span data-livestamp="'+tweet.created_at+'"></span> <span class="glyphicon glyphicon-time"></span></small></div><p class="tweettext">'+tweettext+'</p></div></li>');
-        $(newel).hide()
-            .prependTo('#beertweets')
-            .show('fast'); 
-        $(newel).find('a').attr("target","_blank");
+        // collect data for rendering by jsviews templates
+        var data = [
+            {
+                "profilename": tweet.user.name,
+                "profileimage": tweet.user.profile_image_url,
+                "place": place,
+                "tweettext": tweettext,
+                "tweettime": tweet.created_at
+            }
+        ];
+
+        // grab template
+        var tmpl = $.templates("#tweettmpl");
+        
+        // render data into template
+        var twit = tmpl.render(data);
+        
+        // prepend to ul#beertweets and show
+        var newelm = $(twit).prependTo('#beertweets')
+                            .show('fast'); 
+
+        // make all links external                            
+        $(newelm).find('a').attr("target","_blank");
+
+        /**
+         * remove the last element if we have more than maxtweets
+         * otherwise momentjs uses too much cpu
+         */
+        if(published.length > maxtweets){
+            $('#beertweets li:last').remove();
+        }
     }
 });

@@ -113,10 +113,11 @@ gulp.task('uglifyJs', function() {
 	 */
 	
 	return gulp.src([
-		'development/vendor/jquery/dist/jquery.min.js',
+		'development/vendor/jquery/dist/jquery.js',
 		'development/vendor/moment/min/moment.min.js',
 		'development/vendor/livestamp/livestamp.min.js',
 		'development/vendor/tweet-formatter/tweet-formatter.js',
+		'development/vendor/jsviews/jsviews.js',
 		'development/js/main.js'
 	])
 	.pipe(uglify('app.js'))
