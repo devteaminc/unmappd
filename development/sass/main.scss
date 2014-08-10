@@ -25,7 +25,8 @@ body {
 }
 // end footer styling
 
-.col-md-6{
+// reset padding on bootstrap columns
+.col-md-6 {
   padding: 0 5px 0 5px;
 }
 
@@ -36,44 +37,43 @@ body {
 
 .map {
   height: 360px; 
-  border:1px solid $border-color; 
+  border:$border-main; 
+}
+
+.profile {
+  border:$border-main;
 }
 
 #beertweets {
     list-style: none;
     margin: 5px 0 0 0;
     padding: 0;
-}
 
-.profile {
-  border:1px solid $border-color;
-}
+    li {
+      margin: 10px;
+      padding-bottom: 5px;
+      border-bottom: 1px;
 
-#beertweets li {
-    margin: 10px;
-    padding-bottom: 5px;
-    border-bottom: 1px;
-}
+        .tweettext strong, .placetext {
+          font-weight: normal;
+          color: #000;
+        }
 
-#beertweets li .tweettext strong, #beertweets li .placetext {
-  font-weight: normal;
-  color: #000;
-}
+        .beertweets-body p{
+            margin: 0;
+            color: #777777;
+        }
+    }
 
-#beertweets li.left .beertweets-body {
-    margin-left: 60px;
-}
+    li.left .beertweets-body {
+        margin-left: 60px;
+    }
 
-#beertweets li.right .beertweets-body {
-    margin-right: 60px;
-}
+    li.right .beertweets-body {
+        margin-right: 60px;
+    }
 
-
-#beertweets li .beertweets-body p {
-    margin: 0;
-    color: #777777;
-}
-
-#beertweets .glyphicon {
-    margin-right: 5px;
+    .glyphicon {
+      margin-right: 5px;
+    }
 }
