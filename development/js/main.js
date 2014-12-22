@@ -78,7 +78,7 @@ socket.on('photosend', function(data){
     var id = tweet.id;
     var src = tweet.imsrc;
     var isrc = src.replace('640x640','320x320');
-    $('#'+id).append('<img src="'+ isrc +'" class="img-thumbnail" />');
+    $('#'+id).append('<div class="clearfix"><img src="'+ isrc +'" class="img-thumbnail" /></div>');
 });
 
 // respond to socket stream event
