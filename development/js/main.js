@@ -40,7 +40,8 @@ function textReplacements(tweettext){
 /*
  * Initialise the 2 maps
  */
-function initialize() {
+function initialize(){
+
     var mapAllOptions = {
         zoom: 1,
         draggable: false,
@@ -61,6 +62,7 @@ function initialize() {
    
    mapAll = new google.maps.Map(document.getElementById('mapAll'), mapAllOptions);
    mapDet = new google.maps.Map(document.getElementById('mapDet'), mapDetOptions);
+
 }
 initialize();
 
@@ -70,6 +72,14 @@ var published = [];
 // init place
 var place = '';
 var socket = io.connect('http://'+location.hostname);
+
+socket.on('photosend', function(data){
+    var tweet = jQuery.parseJSON(data);
+    var id = tweet.id;
+    var src = tweet.imsrc;
+    var isrc = src.replace('640x640','320x320');
+    $('#'+id).append('<img src="'+ isrc +'" class="img-thumbnail" />');
+});
 
 // respond to socket stream event
 socket.on('stream', function(tweet){
@@ -84,6 +94,10 @@ socket.on('stream', function(tweet){
 
         // reset place
         place = '';
+
+        if((tweettext.indexOf("#photo") > -1)){
+            socket.emit('photo-found', { url: tweet.entities.urls[0].expanded_url, id: tweet.id });
+        }
 
         // add marker to the map if the tweet contains geo
         if(tweet.geo !== null){
@@ -125,6 +139,7 @@ socket.on('stream', function(tweet){
                 "profileimage": tweet.user.profile_image_url,
                 "place": place,
                 "tweettext": tweettext,
+                "tweetid": tweet.id,
                 "tweettime": tweet.created_at
             }
         ];
