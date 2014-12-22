@@ -21,7 +21,7 @@ app.get(/^(.+)$/, function(req, res) {
 });
 
 // array of terms to trackList
-var trackList = ['untp it','untp.it','untpd.it','untpd it'];
+var trackList = ['untp beer'];
 
 // open stream to Twitter
 var stream = T.stream('statuses/filter', { track: trackList });
