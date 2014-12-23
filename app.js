@@ -41,6 +41,7 @@ io.on('connection', function (socket){
   socket.on('photo-found', function (data) {
 
     var url = data.url;
+    var tid = data.id;
 
     // The structure of our request call
     // The first parameter is our URL
@@ -49,7 +50,6 @@ io.on('connection', function (socket){
     request(url, function(error, response, html){
 
         // First we'll check to make sure no errors occurred when making the request
-
         if(!error){
 
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
@@ -65,10 +65,10 @@ io.on('connection', function (socket){
               if (resp.statusCode === 200) {
 
                 // send back JSON object
-                var ValidJSON = JSON.stringify({imsrc: imsrc, id: data.id});
+                var imageJson = JSON.stringify({imsrc: imsrc, id: tid});
                 
-                console.log("sending image for " + data.id);
-                io.emit('photosend',ValidJSON);
+                console.log("sending image for "+tid);
+                io.emit('photosend',imageJson);
               }
             });
             
