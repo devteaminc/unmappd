@@ -51,13 +51,23 @@ io.on('connection', function (socket){
         // First we'll check to make sure no errors occurred when making the request
 
         if(!error){
-            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
+            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
             var $ = cheerio.load(html);
 
+            // get image src  
             var imsrc = $("#slide > div.indiv_item > div.photo.photo-container-remove > div > img").attr("src");
-            var ValidJSON = JSON.stringify({imsrc: imsrc, id: data.id});
-            io.emit('photosend',ValidJSON);
+            
+            // make sure image exists
+            request(imsrc, function (err, resp) {
+
+              // if image request returns 200 then send it back 
+              if (resp.statusCode === 200) {
+                var ValidJSON = JSON.stringify({imsrc: imsrc, id: data.id});
+                io.emit('photosend',ValidJSON);
+              }
+            });
+            
         }
     });
 

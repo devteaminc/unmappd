@@ -68,17 +68,20 @@ initialize();
 
 // store IDs of published tweets to prevent tweet duplication
 var published = [];
+var impublished = [];
 
 // init place
 var place = '';
 var socket = io.connect('http://'+location.hostname);
 
 socket.on('photosend', function(data){
-    var tweet = jQuery.parseJSON(data);
-    var id = tweet.id;
-    var src = tweet.imsrc;
-    var isrc = src.replace('640x640','320x320');
-    $('#'+id).append('<div class="clearfix"><img src="'+ isrc +'" class="img-thumbnail" /></div>');
+    if(impublished.indexOf( twid ) == -1){
+        var tweet = jQuery.parseJSON(data);
+        var id = tweet.id;
+        var src = tweet.imsrc;
+        var isrc = src.replace('640x640','320x320');
+        $('#'+id).append('<div class="clearfix"><img src="'+ isrc +'" class="img-thumbnail" /></div>');
+    }
 });
 
 // respond to socket stream event
@@ -96,7 +99,10 @@ socket.on('stream', function(tweet){
         place = '';
 
         if((tweettext.indexOf("#photo") > -1)){
-            socket.emit('photo-found', { url: tweet.entities.urls[0].expanded_url, id: tweet.id });
+            if(impublished.indexOf( twid ) == -1){
+                impublished.push(twid);
+                socket.emit('photo-found', { url: tweet.entities.urls[0].expanded_url, id: tweet.id });
+            }
         }
 
         // add marker to the map if the tweet contains geo
