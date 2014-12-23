@@ -55,7 +55,7 @@ io.on('connection', function (socket){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
             var $ = cheerio.load(html);
 
-            // get image src  
+            // get image src from untappd page 
             var imsrc = $("#slide > div.indiv_item > div.photo.photo-container-remove > div > img").attr("src");
             
             // make sure image exists
@@ -63,7 +63,11 @@ io.on('connection', function (socket){
 
               // if image request returns 200 then send it back 
               if (resp.statusCode === 200) {
+
+                // send back JSON object
                 var ValidJSON = JSON.stringify({imsrc: imsrc, id: data.id});
+                
+                console.log("sending image for " + data.id);
                 io.emit('photosend',ValidJSON);
               }
             });
