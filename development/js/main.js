@@ -75,9 +75,10 @@ var place = '';
 var socket = io.connect('http://'+location.hostname);
 
 socket.on('photosend', function(data){
-    if(impublished.indexOf( twid ) == -1){
-        var tweet = jQuery.parseJSON(data);
-        var id = tweet.id;
+    var tweet = jQuery.parseJSON(data);
+    var id = tweet.id;
+    if(impublished.indexOf( id ) == -1){
+        impublished.push(id);
         var src = tweet.imsrc;
         var isrc = src.replace('640x640','320x320');
         $('#'+id).append('<div class="clearfix"><img src="'+ isrc +'" class="img-thumbnail" /></div>');
@@ -95,15 +96,18 @@ socket.on('stream', function(tweet){
         // format twitter specific elements in string - e.g. usernames, links and hashtags
         var tweettext = tweetFormatter(tweet.text);
 
-        // reset place
-        place = '';
-
+        // if there's a photo go get it!
         if((tweettext.indexOf("#photo") > -1)){
+
+            // if image hasn't been retrieved go get it!
             if(impublished.indexOf( twid ) == -1){
-                impublished.push(twid);
                 socket.emit('photo-found', { url: tweet.entities.urls[0].expanded_url, id: tweet.id });
             }
+            
         }
+
+        // reset place
+        place = '';
 
         // add marker to the map if the tweet contains geo
         if(tweet.geo !== null){
