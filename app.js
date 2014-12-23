@@ -58,23 +58,27 @@ io.on('connection', function (socket){
             // get image src from untappd page 
             var imsrc = $("#slide > div.indiv_item > div.photo.photo-container-remove > div > img").attr("src");
             
+            if(imsrc !== undefined){
+
             // make sure image exists
             request(imsrc, function (err, resp) {
 
-              // if image request returns 200 then send it back 
-              if (resp.statusCode === 200) {
+              if(!err){
 
-                // send back JSON object
-                var imageJson = JSON.stringify({imsrc: imsrc, id: tid});
-                
-                console.log("sending image for "+tid);
-                io.emit('photosend',imageJson);
+                // if image request returns 200 then send it back 
+                if (resp.statusCode === 200) {
+
+                  // send back JSON object
+                  var imageJson = JSON.stringify({imsrc: imsrc, id: tid});
+                  
+                  console.log("sending image for "+tid);
+                  io.emit('photosend',imageJson);
+                }
               }
             });
-            
         }
+      }
     });
-
   });
 
   // Emitted when a connection attempt is made to Twitter

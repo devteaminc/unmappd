@@ -1,5 +1,4 @@
-var mapAll;
-var mapDet;
+var mapAll, mapDet, heatmapAll, heatmaDetail, pointArray;
 var maxtweets = 100;
 
 /*
@@ -43,25 +42,32 @@ function textReplacements(tweettext){
 function initialize(){
 
     var mapAllOptions = {
-        zoom: 1,
+        zoom: 2,
         draggable: false,
         scrollwheel: false,
         center: new google.maps.LatLng(20, 0),
         disableDefaultUI: true,
-        styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+        styles: [{"stylers":[{"visibility":"simplified"}]},{"stylers":[{"color":"#131314"}]},{"featureType":"water","stylers":[{"color":"#131313"},{"lightness":7}]},{"elementType":"labels.text.fill","stylers":[{"visibility":"off"},{"lightness":25}]}]
+
     };
 
-    var mapDetOptions = {
-        zoom: 2,
-        draggable: false,
-        scrollwheel: false,
-        center: new google.maps.LatLng(0, 0),
-        disableDefaultUI: true,
-        styles: [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
-    };
-   
-   mapAll = new google.maps.Map(document.getElementById('mapAll'), mapAllOptions);
-   mapDet = new google.maps.Map(document.getElementById('mapDet'), mapDetOptions);
+    mapAll = new google.maps.Map(document.getElementById('mapAll'), mapAllOptions);
+
+    // Resize stuff...
+    google.maps.event.addDomListener(window, "resize", function() {
+       var center = mapAll.getCenter();
+       google.maps.event.trigger(mapAll, "resize");
+       mapAll.setCenter(center); 
+    });
+
+    pointArray = new google.maps.MVCArray([]);
+
+    heatmapAll = new google.maps.visualization.HeatmapLayer({
+        data: pointArray
+    });
+
+    heatmapAll.setMap(mapAll);
+    heatmapAll.set('radius',3);
 
 }
 initialize();
@@ -116,24 +122,7 @@ socket.on('stream', function(tweet){
             var lng = p[1];
             var latlng = new google.maps.LatLng(lat, lng);
 
-            // add to 'All' map
-            var marker1 = new google.maps.Marker({
-                position: latlng,
-                map: mapAll,
-                title: tweet.text
-            });
-
-            // add to 'Detail' map
-            var marker2 = new google.maps.Marker({
-                position: latlng,
-                map: mapDet,
-                title: tweet.text
-            });
-
-            // set a new center of the map to latest marker and then pan to there
-            var center = new google.maps.LatLng(lat, lng);
-            mapDet.panTo(center);
-            mapDet.setZoom(5);
+            pointArray.push(latlng);
 
             // create a string for place details
             place = tweet.place.full_name;
